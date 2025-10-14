@@ -3,9 +3,11 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
         int num1, num2;
-        String operator;
         int sum = 0;
+
+        char operator;
         String startCmd;
 
         do {
@@ -24,29 +26,10 @@ public class Main {
             num2 = scanner.nextInt();
 
             System.out.print("\n사칙연산 기호를 입력하세요 : ");
-            operator = scanner.next();
+            operator = scanner.next().charAt(0);
 
-            switch (operator) {
-                case "+":
-                    sum = num1 + num2;
-                    break;
-                case "-":
-                    sum = num1 - num2;
-                    break;
-                case "x":
-                    sum = num1 * num2;
-                    break;
-                case "/":
-                    if(num2 == 0) {
-                        System.out.println("나눗셈 연산에서 분모에 0이 입력될 수 없습니다.");
-                        break;
-                    }else {
-                        sum = num1 / num2;
-                    }
-                    break;
-                default:
-                    System.out.println("\n결과 : " + sum);
-            }
+            Calculator calculator = new Calculator(num1, num2, operator);
+            scanner.nextLine();
         }while(true);
     }
 }
