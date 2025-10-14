@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        Calculator calculator = new Calculator();
 
         int num1, num2;
         int sum = 0;
@@ -28,8 +29,9 @@ public class Main {
             System.out.print("\n사칙연산 기호를 입력하세요 : ");
             operator = scanner.next().charAt(0);
 
-            Calculator calculator = new Calculator(num1, num2, operator);
+            calculator.calculate(num1, num2, operator);
             scanner.nextLine();
         }while(true);
+
     }
 }

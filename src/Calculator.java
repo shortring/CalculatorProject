@@ -8,12 +8,12 @@ public class Calculator {
     char operator;
 
     //생성자
-    Calculator(int num1, int num2, char operator){
-        this.num1 = num1;
-        this.num2 = num2;
-        this.operator = operator;
-        sum = calculate(this.num1, this.num2, this.operator);
-    }
+//    Calculator(int num1, int num2, char operator){
+//        this.num1 = num1;
+//        this.num2 = num2;
+//        this.operator = operator;
+//        sum = calculate(this.num1, this.num2, this.operator);
+//    }
 
     //기능
     public int calculate(int num1, int num2, char operator){
@@ -39,11 +39,11 @@ public class Calculator {
                 break;
             default:
                 System.out.println("사칙연산 기호를 정확히 입력해주세요");
+                error = true;
                 break;
         }
         if(error) {
             System.out.println("\nerror가 발생했습니다 숫자와 기호를 정확히 입력해 주세요 (+, -, x, /)");
-            error = false;
         }else {
             System.out.println("\n결과 : " + num1 + " " + operator + " " + num2 + " = " + sum);
         }
