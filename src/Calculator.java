@@ -4,26 +4,28 @@ public class Calculator {
     //속성
     int num1;
     int num2;
-    int sum;
     char operator;
     ArrayList<String> resultList = new ArrayList<>();
 
     //생성자
 
-
     //기능
     //계산할 정보 입력(Setter)
-    void settingCalc(int num1, int num2, char operator) {
+    void inputCalc(int num1, int num2, char operator) {
         this.num1 = num1;
         this.num2 = num2;
         this.operator = operator;
     }
 
-    public void removeResult(){
+    void saveResult(int sum) {
+        resultList.add(String.format("%d %c %d = %d", num1, operator, num2, sum));
+    }
+
+    void removeResult(){
         resultList.remove(resultList.get(0));
     }
 
-    public void viewResult(){
+    public void viewResultList(){
         int index = 0;
         if(resultList.isEmpty()){
             System.out.println("저장된 기록이 없습니다");
@@ -33,11 +35,12 @@ public class Calculator {
                 System.out.println(index + "번째 기록 = " + result);
             }
         }
+        System.out.println("-------------------------------------------------");
     }
 
     //사칙연산 결괏값 반환(Getter)
     public int calculate(){
-        sum = 0;
+        int sum = 0;
         boolean error = false;
 
         // 양의 정수 입력 여부 검사
@@ -52,7 +55,7 @@ public class Calculator {
                 case '-':
                     sum = num1 - num2;
                     break;
-                case 'x':
+                case '*':
                     sum = num1 * num2;
                     break;
                 case '/':
@@ -73,9 +76,6 @@ public class Calculator {
             }else {
                 System.out.println("\n결과 : " + num1 + " " + operator + " " + num2 + " = " + sum);
             }
-
-            //결과 저장
-            resultList.add(num1 + " " + operator + " " + num2 + " = " + sum);
         }
 
         return sum;
