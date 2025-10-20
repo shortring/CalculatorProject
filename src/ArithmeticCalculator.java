@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
-public class Calculator {
+public class ArithmeticCalculator{
     //속성
-    int num1;
-    int num2;
+    double num1;
+    double num2;
     char operator;
     ArrayList<String> resultList = new ArrayList<>();
 
@@ -11,21 +11,21 @@ public class Calculator {
 
     //기능
     //계산할 정보 입력(Setter)
-    void inputCalc(int num1, int num2, char operator) {
-        this.num1 = num1;
-        this.num2 = num2;
+    <S> void inputCalc(S num1, S num2, char operator) {
+        this.num1 = (double)num1;
+        this.num2 = (double)num2;
         this.operator = operator;
     }
 
-    void saveResult(int sum) {
-        resultList.add(String.format("%d %c %d = %d", num1, operator, num2, sum));
+    void saveResult(double sum) {
+        resultList.add(String.format("%f %c %f = %f", num1, operator, num2, sum));
     }
 
     void removeResult(){
         resultList.remove(resultList.get(0));
     }
 
-    public void viewResultList(){
+    void viewResultList(){
         int index = 0;
         if(resultList.isEmpty()){
             System.out.println("저장된 기록이 없습니다");
@@ -39,8 +39,8 @@ public class Calculator {
     }
 
     //사칙연산 결괏값 반환(Getter)
-    public int calculate(){
-        int sum = 0;
+    double calculate(){
+        double sum = 0;
         boolean error = false;
 
         // 양의 정수 입력 여부 검사
@@ -50,20 +50,20 @@ public class Calculator {
             //사칙연산
             switch (operator) {
                 case '+':
-                    sum = num1 + num2;
+                    sum = OperatorType.PLUS.operating(num1, num2);
                     break;
                 case '-':
-                    sum = num1 - num2;
+                    sum = OperatorType.MINUS.operating(num1, num2);
                     break;
                 case '*':
-                    sum = num1 * num2;
+                    sum = OperatorType.MULTIPLY.operating(num1, num2);
                     break;
                 case '/':
                     if(num2 == 0) {
                         System.out.println("나눗셈 연산에서 분모에 0이 입력될 수 없습니다.");
                         error = true;
                     }else {
-                        sum = num1 / num2;
+                        sum = OperatorType.DIVIDE.operating(num1, num2);
                     }
                     break;
                 default:
@@ -74,7 +74,8 @@ public class Calculator {
             if(error) {
                 System.out.println("\nerror가 발생했습니다 숫자와 기호를 정확히 입력해 주세요 (+, -, x, /)");
             }else {
-                System.out.println("\n결과 : " + num1 + " " + operator + " " + num2 + " = " + sum);
+                //System.out.println("%n결과 : %f %c %f = %f", num1, operator, num2, sum);
+                System.out.printf("%n결과 : %f %c %f = %f", num1, operator, num2, sum);
             }
         }
 
