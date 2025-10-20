@@ -46,19 +46,20 @@ public class App {
                         System.out.print("\n계산할 두번째 정수를 입력해주세요 : ");
                         num2 = scanner.nextDouble();
 
-                        System.out.print("\n사칙연산 기호를 입력하세요(+, -, *, /) : ");
+                        System.out.print("\n사칙연산 기호를 입력하세요(+, -, *, /, %, ^) : ");
                         operator = scanner.next().charAt(0);
 
                         calculator.inputCalc(num1, num2, operator);
                         sum = calculator.calculate();
                         BigDecimal fixedResult = new BigDecimal(sum);
                         calculator.saveResult(fixedResult.doubleValue());
+                        calculator.viewBiggestResultsLog(fixedResult.doubleValue());
                         scanner.nextLine(); //scanner.nextLine()으로 인한 (exit입력 혹은 계산기 시작 입력)을 넘기는 문제 해결을 위해 추가
                         break;
                 }
             }while(true);
-        }catch(Exception e){
-            System.out.println("정확한 값을 입력해주세요(+, -, *, /) " + e.getMessage());
+        }catch(IllegalArgumentException e){
+            System.out.println("정확한 값을 입력해주세요(+, -, *, /, %, ^) " + e.getMessage());
         }
 
     }

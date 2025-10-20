@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class ArithmeticCalculator{
     //속성
@@ -6,6 +9,7 @@ public class ArithmeticCalculator{
     double num2;
     char operator;
     ArrayList<String> resultList = new ArrayList<>();
+    ArrayList<Double> results = new ArrayList<>();
 
     //생성자
 
@@ -18,6 +22,7 @@ public class ArithmeticCalculator{
     }
 
     void saveResult(double sum) {
+        results.add(sum);
         resultList.add(String.format("%f %c %f = %f", num1, operator, num2, sum));
     }
 
@@ -36,6 +41,13 @@ public class ArithmeticCalculator{
             }
         }
         System.out.println("-------------------------------------------------");
+    }
+
+    void viewBiggestResultsLog(double result){
+        List<Double> biggestResultList = results.stream()//스트림 생성
+                .filter(biggestValue -> biggestValue > result)  //중간 연산 등록(result보다 더 큰 결괏값 찾기)
+                .collect(Collectors.toList());  //최종연산
+        System.out.println("\n저장된 값 중 마지막 결괏값보다 큰 결괏값들 = " + biggestResultList);
     }
 
     //사칙연산 결괏값 반환(Getter)
@@ -66,13 +78,18 @@ public class ArithmeticCalculator{
                         sum = OperatorType.DIVIDE.operating(num1, num2);
                     }
                     break;
+                case '%':
+                    sum = OperatorType.MOD.operating(num1, num2);
+                    break;
+                case '^':
+                    sum = OperatorType.POW.operating(num1, num2);
                 default:
                     System.out.println("사칙연산 기호를 정확히 입력해주세요");
                     error = true;
                     break;
             }
             if(error) {
-                System.out.println("\nerror가 발생했습니다 숫자와 기호를 정확히 입력해 주세요 (+, -, x, /)");
+                System.out.println("\nerror가 발생했습니다 숫자와 기호를 정확히 입력해 주세요 (+, -, *, /, %, ^)");
             }else {
                 //System.out.println("%n결과 : %f %c %f = %f", num1, operator, num2, sum);
                 System.out.printf("%n결과 : %f %c %f = %f", num1, operator, num2, sum);
