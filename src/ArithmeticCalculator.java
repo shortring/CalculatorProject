@@ -47,6 +47,7 @@ public class ArithmeticCalculator{
         List<Double> biggestResultList = results.stream()//스트림 생성
                 .filter(biggestValue -> biggestValue > result)  //중간 연산 등록(result보다 더 큰 결괏값 찾기)
                 .collect(Collectors.toList());  //최종연산
+                //.toList()
         System.out.println("\n저장된 값 중 마지막 결괏값보다 큰 결괏값들 = " + biggestResultList);
     }
 
@@ -83,6 +84,7 @@ public class ArithmeticCalculator{
                     break;
                 case '^':
                     sum = OperatorType.POW.operating(num1, num2);
+                    break;
                 default:
                     System.out.println("사칙연산 기호를 정확히 입력해주세요");
                     error = true;

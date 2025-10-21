@@ -1,5 +1,6 @@
 import java.math.BigDecimal;
 import java.util.Scanner;
+import java.util.zip.DataFormatException;
 
 public class App {
     public static void main(String[] args) {
@@ -23,6 +24,7 @@ public class App {
 
         try{
             do {
+                //모드 선택
                 System.out.println("계산기를 시작하려면 엔터를 누르세요");
                 System.out.println("계산기를 종료하고 싶다면 exit를 입력해 주세요");
                 System.out.println("저장된 기록을 확인하고 싶다면 view를 입력해 주세요");
@@ -30,36 +32,56 @@ public class App {
                 startCmd = scanner.nextLine();
 
                 switch (startCmd) {
-                    case "exit":
+                    case "exit":    //계산기 종료
                         break;
-                    case "view":
+                    case "view":    //저장된 값 출력
                         calculator.viewResultList();
                         System.out.println("데이터를 삭제하고 싶다면 delete를, 그렇지 않다면 엔터를 입력해주세요");
+                        //가장 먼저 저장된 값 하나 삭제
                         if(scanner.nextLine().equals("delete")) {
                             calculator.removeResult();
                         }
                         break;
-                    default:
+                    default:        //계산기 시작
+                        //입력
                         System.out.print("계산할 첫번째 정수를 입력해주세요 : ");
-                        num1 = scanner.nextDouble();
+                        if(scanner.hasNextDouble()) {
+                            num1 = scanner.nextDouble();
+                        }else{
+                            throw new IllegalArgumentException("숫자를 입력해 주세요");
+                        }
 
                         System.out.print("\n계산할 두번째 정수를 입력해주세요 : ");
-                        num2 = scanner.nextDouble();
+                        if(scanner.hasNextDouble()) {
+                            num2 = scanner.nextDouble();
+                        }else {
+                            throw new IllegalArgumentException("숫자를 입력해 주세요");
+                        }
 
                         System.out.print("\n사칙연산 기호를 입력하세요(+, -, *, /, %, ^) : ");
-                        operator = scanner.next().charAt(0);
+                        if(scanner.next().length() > 1){
+                            throw new IllegalArgumentException("error가 발생했습니다.\n사칙 연산 기호를 정확히 입력해 주세요(+, -, *, /, %, ^)");
+                        }else{
+                            operator = scanner.next().charAt(0);
+                        }
 
                         calculator.inputCalc(num1, num2, operator);
+
+                        //계산
                         sum = calculator.calculate();
+
+                        //저장
                         BigDecimal fixedResult = new BigDecimal(sum);
                         calculator.saveResult(fixedResult.doubleValue());
+
+                        //저장된 값들 중 마지막으로 계산한 값보다 더 큰 수들 출력
                         calculator.viewBiggestResultsLog(fixedResult.doubleValue());
                         scanner.nextLine(); //scanner.nextLine()으로 인한 (exit입력 혹은 계산기 시작 입력)을 넘기는 문제 해결을 위해 추가
                         break;
                 }
             }while(true);
         }catch(IllegalArgumentException e){
-            System.out.println("정확한 값을 입력해주세요(+, -, *, /, %, ^) " + e.getMessage());
+            System.out.println(e.getMessage());
         }
 
     }
